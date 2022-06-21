@@ -1,5 +1,5 @@
 import { createStore } from "vuex";
-
+import { idGenerator } from "../helpers/idGenerator";
 const store = createStore({
   state: {
     pages: [
@@ -7,16 +7,16 @@ const store = createStore({
         route: "home",
         sections: [
           {
-            id: 2332324234452351,
+            id: idGenerator(),
             background: "pink",
             classes: ["grid", "grid-cols-2", "gap-2"],
             elements: [
               {
-                id: 2,
+                id: idGenerator(),
                 name: "text-input"
               },
               {
-                id: 3,
+                id: idGenerator(),
                 name: "paragraph",
                 properties: { value: "section 1.a" }
               }
@@ -62,12 +62,12 @@ const store = createStore({
           //   ]
           // },
           {
-            id: 876,
+            id: idGenerator(),
             background: "blue",
             classes: ["grid", "grid-cols-2"],
             elements: [
               {
-                id: 8,
+                id: idGenerator(),
                 name: "btn-component",
                 properties: {
                   text: "click me!",
@@ -82,12 +82,12 @@ const store = createStore({
         route: "home",
         sections: [
           {
-            id: 1231,
+            id: idGenerator(),
             background: "pink",
             classes: ["grid", "grid-cols-1", "md:grid-cols-2", "gap-2"],
             elements: [
               {
-                id: 3,
+                id: idGenerator(),
                 name: "paragraph",
                 properties: { value: "PAGGE 2 a" }
               }
@@ -118,7 +118,7 @@ const store = createStore({
         }
       });
       state.pages[pageIdx].sections.splice(found + 1, 0, {
-        id: 100,
+        id: idGenerator(),
         background: "purple",
         classes: ["grid", "grid-cols-1"],
         elements: []
@@ -171,7 +171,7 @@ const store = createStore({
           return;
         if (status === "+") {
           state.pages[pageIdx].sections[found].elements.push({
-            id: 12121,
+            id: idGenerator(),
             classes: ["grid", "grid-cols-1", "gap-2"]
           });
           gridNum += 1;
@@ -199,15 +199,20 @@ const store = createStore({
       const elementIdx = state.pages[pageIdx].sections[
         sectionIdx
       ].elements.findIndex((e) => e.id === elementId);
-      console.log(element);
+      console.log(
+        state.pages[pageIdx].sections[sectionIdx],
+        elementIdx,
+        elementId
+      );
       const properties = {};
+      element.id = idGenerator();
       element.props.forEach((prop) => {
         properties[prop.name] = prop.value;
       });
-      state.pages[pageIdx].sections[sectionIdx].elements[elementIdx] = {
+      state.pages[pageIdx].sections[sectionIdx].elements.splice(elementIdx, 1, {
         ...element,
         properties
-      };
+      });
     }
   },
   actions: {}
