@@ -189,7 +189,6 @@ const store = createStore({
       }
     },
     ADD_COMPONENT(state, options) {
-      console.log("ADD", options);
       const elementId = options.elementId;
       const sectionId = options.sectionId;
       const element = options.selected;
@@ -201,9 +200,13 @@ const store = createStore({
         sectionIdx
       ].elements.findIndex((e) => e.id === elementId);
       console.log(element);
+      const properties = {};
+      element.props.forEach((prop) => {
+        properties[prop.name] = prop.value;
+      });
       state.pages[pageIdx].sections[sectionIdx].elements[elementIdx] = {
         ...element,
-        properties: { value: element.props.value }
+        properties
       };
     }
   },
